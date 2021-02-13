@@ -1,28 +1,19 @@
-from tkinter import *
+max = 10
 
-# dimensiuni pentru fereastra & canvas
-HEIGHT = 600
-WIDTH = 1000
+def count(i):
+    global max
+    if i == max:
+        return
+    print(i)
+    count(i+1)
 
-# cream o fereastra
-window = Tk()
-# setam o dimnesiune minima pentru fereastra
-window.minsize(WIDTH, HEIGHT)
-# setam fereastra sa nu poata fi redimensionata
-window.resizable(False, False)
+count(0)
 
-# cream un canvas
-canvas = Canvas(width=WIDTH, height=HEIGHT)
-canvas.pack()
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
 
-# creare obiect de tip PhotoImage
-image1 = PhotoImage(file="winter-images/flake.png")
-# creare imagine in canvas
-flake1 = canvas.create_image(100, 100, image=image1)
+res = factorial(3)
 
-# la fiecare secunda, mutam imaginea din canvas
-for time in range(1000, 20000, 1000):
-    print("time: {}".format(time))
-    window.after(time, lambda: canvas.move(flake1, 0, 10))
-
-window.mainloop()
+print(res)

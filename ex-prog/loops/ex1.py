@@ -22,3 +22,14 @@ print()
 
 for i in range(0, 10, 3):
     print(i)
+
+for i in range(0, 10):
+    print("i = {}".format(i))
+
+
+i = 0
+while i < 10:
+    print("i = {}".format(i))
+    i = i + 1
+
+

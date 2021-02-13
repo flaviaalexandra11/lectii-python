@@ -1,43 +1,79 @@
-list1 = [i for i in range(10, 20)]
-x = int(input("x: "))
-k = int(input("k: "))
+from tkinter import *
+from tkinter.filedialog import *
 
-list2 = []
+def new_file():
+    global file
+    file = None
+    text_area.delete(1.0, END)
 
-print(list1)
+def open_file():
+    global file
+    # deschidem dialog
+    file = askopenfilename(defaultextension=".txt")
+    # golim textarea
+    text_area.delete(1.0, END)
+    # deschidem si citim din fisier
+    file = open(file, "r")
+    text = file.read()
+    # inseram in textarea ce am citit din fisier
+    text_area.insert(1.0, text)
+    # inchidem fisierul
+    file.close()
 
-# Metoda 1: cream o lista noua
-# k = 3
-# list1: 10 11 12 13 14 15 16 17 18 19
-# list2: 10 11 12 99 13 14 15 16 17 18 19
-# index: 0  1  2  3  4  5  6  7  8  9
+def save_file():
+    global file
+    # daca nu avem un fisier deschis => cream deialog de salvare
+    if file is None:
+        files = [('All files', '*.*'), ('Text Document', '*.txt')]
+        file = asksaveasfile(filetypes=files, defaultextension=files)
+        print(file.name)
+    # deschidem fiserul
+    file = open(file.name, "w")
+    # luam datele din textarea
+    text = text_area.get(1.0, END)
+    # scriem datele in fiser
+    file.write(text)
+    # inchidem fiserul
+    file.close()
 
-for i in range(0, len(list1)):
-    # Cand ajungem la pozitia potrivita => adaugam x
-    if i == k:
-        list2.append(x)
-    # Adaugam toate elementele din list1 si in list3
-    list2.append(list1[i])
+def cut():
+    text_area.event_generate("<<Cut>>")
 
-print(list2)
+def copy():
+    text_area.event_generate("<<Copy>>")
 
-# Metoda 2: inseram in aceeasi lista, deplasand elementele
-# din dreapta pozitiei unde adagam in dreapta pentru
-# a face loc elementului nou
-# k = 3
-# list1: 10 11 12 13 14 15 16 17 18 19 None
-# list1: 10 11 12 13 13 14 15 16 17 18 19
-# list1: 10 11 12 X  13 14 15 16 17 18 19
+def paste():
+    text_area.event_generate("<<Paste>>")
 
-# crestem dimensiunea listei adaugand o celula goala la final
-list1.append(None)
+window = Tk()
+window.title("Untitled - Notepad")
 
-# Parcurgem de la dreapta la stanga si copiem elementele de dupa k la dreapta
-for i in range(len(list1) - 1, k, -1):
-    list1[i] = list1[i - 1]
+menu_bar = Menu(window)
 
-# Adaugam noul element la pozitia potrivita.
-list1[k] = x
+file_menu = Menu(menu_bar, tearoff=0)
+edit_menu = Menu(menu_bar, tearoff=0)
+help_menu = Menu(menu_bar, tearoff=0)
 
-print(list1)
+menu_bar.add_cascade(label="File", menu=file_menu)
+menu_bar.add_cascade(label="Edit", menu=edit_menu)
+menu_bar.add_cascade(label="Help", menu=help_menu)
 
+file_menu.add_command(label="New", command=new_file)
+file_menu.add_command(label="Open", command=open_file)
+file_menu.add_command(label="Save", command=save_file)
+file_menu.add_separator()
+file_menu.add_command(label="Exit", command=window.quit)
+
+edit_menu.add_command(label="Cut", command=cut)
+edit_menu.add_command(label="Copy", command=copy)
+edit_menu.add_command(label="Paste", command=paste)
+
+help_menu.add_command(label="About Notepad")
+
+text_area = Text()
+text_area.pack()
+
+file = None
+
+window.config(menu=menu_bar)
+window.mainloop()

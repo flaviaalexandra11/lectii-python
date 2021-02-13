@@ -1,29 +1,29 @@
 from tkinter import *
 
 window = Tk()
-
-# Title & Window Size
 window.title("Grid")
-window.minsize(200, 75)
-window.resizable(False, False)
 
 label0 = Label(text="My grid")
 label0.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
 
-counter = 1
-#           0       1       2        3
-colors = ["red", "green", "blue", "violet"]
+label1 = Label(window, text="1", fg="white", bg="red", padx=5, pady=5)
+label2 = Label(window, text="2", fg="white", bg="green", padx=5, pady=5)
+label3 = Label(window, text="3", fg="white", bg="blue", padx=5, pady=5)
+label4 = Label(window, text="4", fg="white", bg="violet", padx=5, pady=5)
 
-for row in range(1, 3):
-    for col in range(0, 4):
-        index = col
-        index = index + (row % 2) * (len(colors) - 1 - 2 * index)
-        print("{} {} {}".format(row, col, index))
-        color = colors[index]
+label5 = Label(window, text="5", fg="white", bg="violet", padx=5, pady=5)
+label6 = Label(window, text="6", fg="white", bg="blue", padx=5, pady=5)
+label7 = Label(window, text="7", fg="white", bg="green", padx=5, pady=5)
+label8 = Label(window, text="8", fg="white", bg="red", padx=5, pady=5)
 
-        label = Label(text=str(counter), fg="white", bg=color)
-        label.grid(row=row, column=col)
-        counter = counter + 1
-    print()
+label1.grid(row=1, column=0)
+label2.grid(row=1, column=1)
+label3.grid(row=1, column=2)
+label4.grid(row=1, column=3)
+
+label5.grid(row=2, column=0)
+label6.grid(row=2, column=1)
+label7.grid(row=2, column=2)
+label8.grid(row=2, column=3)
 
 window.mainloop()

@@ -18,13 +18,17 @@ input_file.close()
 
 output_file = open("patterns_output.txt", "w")
 
-for i in range(0, n):
+for i in range(1, n):
     for j in range(0, i):
+        print("(i, j) = ({}, {})".format(i, j))
         output_file.write('*')
     output_file.write("\n")
 
+print()
+
 for i in range(n, 0, -1):
     for j in range(0, i):
+        print("(i, j) = ({}, {})".format(i, j))
         output_file.write('*')
     output_file.write("\n")
 
